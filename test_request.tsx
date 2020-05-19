@@ -24,4 +24,4 @@ request.defaultProps = {
   path: '/gw/api/'
 } as Partial<AxiosRequestConfig>
 
-// request readme README
+request readme README
