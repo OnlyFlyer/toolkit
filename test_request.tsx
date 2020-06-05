@@ -24,4 +24,7 @@ request.defaultProps = {
   path: '/gw/api/'
 } as Partial<AxiosRequestConfig>
 
-// request readme README
+// ./.absrequest readme README
+
+const a = Math.ceil(Math.random() * 1000)
+console.log('a:', a)
