@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
+    "module": "esnext", // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
+    "declaration": true, // 如果设为true，编译每个ts文件之后会生成一个js文件和一个声明文件
+    "sourceMap": true, // 用来指定编译时是否生成.map文件
+    "importHelpers": true,
+    // "allowJs": true, // 是否检测 JS 语法。 注: allowJs 和 declaration 不能同时设置为 true
+    "allowSyntheticDefaultImports": true, // 用来指定允许从没有默认导出的模块中默认导入 
+    "noUnusedLocals": true, // 默认false,是否检测定义了但是没使用的变量
+    "outDir": "./lib",
+    "moduleResolution": "Node", // 用于选择模块解析策略，有'node'和'classic'两种类型
+    "noUnusedParameters": true, // 用于检查是否有在函数体中没有使用的参数
+    "noImplicitReturns": true, // 用于检查函数是否有返回值，设为true后，如果函数没有返回值则会提示
+    "experimentalDecorators": true, // experimentalDecorators用于指定是否启用实验性的装饰器特性
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "**/__tests__/*"]
+}
