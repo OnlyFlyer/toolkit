@@ -23,3 +23,5 @@ request.defaultProps = {
   url: process.env.GATEWAY,
   path: '/gw/api/'
 } as Partial<AxiosRequestConfig>
+
+// request readme README
