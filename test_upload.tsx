@@ -1,0 +1,3 @@
+export function upload () {
+  console.log('this is upload!')
+}
