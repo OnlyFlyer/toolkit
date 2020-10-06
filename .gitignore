@@ -1,4 +1,5 @@
-/node_modules
+# dependencies
+node_modules
 # /src/__tests__
 # err.js
 # suc.js
