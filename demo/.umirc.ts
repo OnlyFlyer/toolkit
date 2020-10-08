@@ -9,3 +9,5 @@ export default defineConfig({
     { path: '/', component: '@/pages/index' },
   ],
 });
+
+console.log('asdad:', defineConfig)
