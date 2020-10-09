@@ -10,7 +10,12 @@
     "dev": "tsc ,编译， rollup 打包",
     "clean": "rm -rf es lib"
   },
-  "keywords": ["request", "gateway", "http", "https"],
+  "keywords": [
+    "request",
+    "gateway",
+    "http",
+    "https"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
