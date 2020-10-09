@@ -1,5 +1,6 @@
 # dependencies
 node_modules
-# /src/__tests__
-# err.js
-# suc.js
+
+# log
+/npm-debug.log*
+/lerna-debug.log*
