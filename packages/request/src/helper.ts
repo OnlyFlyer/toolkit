@@ -5,3 +5,12 @@ export const defaultHeaders = {
   'Content-Type': 'multipart/form-data',
   appKey: process.env.APP_KEY
 }
+
+export const baseQuery = {
+  appKey: '',
+  bizCode: '',
+  clientSysName: '',
+  clientSysVersion: '',
+  clientVersion: 'zx' || 'windows',
+  deviceUUID: 'zxc'
+}

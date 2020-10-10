@@ -1,8 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 
+import { defaultHeaders, baseQuery } from './helper'
+
 interface RequestProps {
   api: string
-  params?: any
+  query?: any
   headers?: any
   config?: AxiosRequestConfig
 }
@@ -25,7 +27,7 @@ customAxios.interceptors.response.use(
       return response || result
     } else {
       if (+errorResponse.code === 9100) {
-        const { APP_KEY, LOGIN } = process.env
+        const { APP_KEY = '', LOGIN = 'https://login.songxiaocai.com' } = process.env
         const { href } = window.location
         window.location.href = `${LOGIN}?appKey=${APP_KEY}&goto_page=${encodeURIComponent(href)}`
         return
@@ -38,17 +40,28 @@ customAxios.interceptors.response.use(
 
 
 export const request: any = (props: AxiosRequestConfig & RequestProps) => {
-  try {
-    console.log('request---1')
-    return axios.create(props)
-  } catch (err) {
-    console.log('err:', err)
-    return null
-  }
+  const { headers = {}, query = {}, config = {} } = props
+  return customAxios({
+    ...props,
+    headers: {
+      ...defaultHeaders,
+      ...headers
+    },
+    data: {
+      ...baseQuery,
+      ...query
+    },
+    ...config
+  })
 }
 
 request.defaultProps = {
-  url: process.env.GATEWAY,
-  path: '/gw/api/'
+  url: '',
+  path: '/gw/api/',
+  method: 'post',
+  headers: {},
+  query: {},
+  config: {}
+  // process.env.GATEWAY
 }
 // as Partial<AxiosRequestConfig>
