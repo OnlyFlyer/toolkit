@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 
 import { defaultHeaders, baseQuery } from './helper'
 
-interface RequestProps {
+export interface RequestProps {
   api: string
   query?: any
   headers?: any
