@@ -8,7 +8,16 @@ export default () => {
   // console.log('env:', process.env)
   const init = useCallback(async () => {
     try {
-      const res = await request({ api: '/aa' })
+      const res = await request({
+        api: 'songxiaocai.devops.AppProvider.queryClient',
+        url: 'gw/api/',
+        method: 'post',
+        query: {
+          queryDTO: {
+            types: [1,2,3,4]
+          }
+        }
+      })
       console.log('res:', res)
     } catch (err) {
       console.log('err:', err)

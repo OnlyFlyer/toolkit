@@ -1,9 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 
-import { defaultHeaders, baseQuery } from './helper'
+import { defaultHeaders, defaultQuery, defaultLogin } from './helper'
 
 export interface RequestProps {
   api: string
+  path?: string
   query?: any
   headers?: any
   config?: AxiosRequestConfig
@@ -14,54 +15,74 @@ const customAxios = axios.create({
   timeout: 60000,
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    ...defaultHeaders
   }
 })
 
 customAxios.interceptors.response.use(
-  (val: AxiosResponse) => {
-    const { data } = val
+  ({ data }: AxiosResponse) => {
+    const { href } = window.location
     // 图片上传接口返回的是result
     const { success, response, errorResponse = {}, result } = data
-    if (success) {
-      return response || result
-    } else {
-      if (+errorResponse.code === 9100) {
-        const { APP_KEY = '', LOGIN = 'https://login.songxiaocai.com' } = process.env
-        const { href } = window.location
+    if (success) return response || result
+    if (+errorResponse.code === 9100) {
+      try {
+        const { APP_KEY = '', LOGIN = defaultLogin } = process.env
         window.location.href = `${LOGIN}?appKey=${APP_KEY}&goto_page=${encodeURIComponent(href)}`
-        return
+      } catch (err) {
       }
       return Promise.reject(errorResponse)
     }
   },
-  (err: AxiosError) => Promise.reject(err)
+  (err: AxiosError) => {
+    return Promise.reject(err)
+  }
 )
 
 
 export const request: any = (props: AxiosRequestConfig & RequestProps) => {
-  const { headers = {}, query = {}, config = {} } = props
+  const {
+    api: url, path = '/gw/api', method = 'post',
+    headers = {}, query = {}, config = {}
+  } = props
+  let baseURL = path
+  try {
+    const { GATEWAT } = process.env
+    baseURL = `${GATEWAT}${path}`
+  } catch (err) {}
   return customAxios({
     ...props,
+    url,
+    baseURL,
+    method,
     headers: {
       ...defaultHeaders,
       ...headers
     },
     data: {
-      ...baseQuery,
+      ...defaultQuery,
       ...query
     },
+    transformRequest: [
+      _data => {
+        const data = new window.FormData()
+        for (const key in _data) {
+          if (_data[key] === '') break
+          data.append(
+            key,
+            _data[key] instanceof Object ? JSON.stringify(delEmptyString(_data[key])) : _data[key]
+          )
+        }
+        return data
+      }
+    ],
     ...config
   })
 }
 
-request.defaultProps = {
-  url: '',
-  path: '/gw/api/',
-  method: 'post',
-  headers: {},
-  query: {},
-  config: {}
-  // process.env.GATEWAY
+function delEmptyString(obj: any) {
+  for (const key in obj) {
+    if (obj[key] === '') delete obj[key]
+  }
+  return obj
 }
-// as Partial<AxiosRequestConfig>
