@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "cp -r ../packages/request ./src/modules && umi dev",
+    "start": "rm -rf ./src/modules/* && cp -r ../packages/request ./src/modules && umi dev",
     "clean": "rm -rf ./src/modules/*",
     "build": "umi build",
     "postinstall": "umi generate tmp",

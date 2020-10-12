@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from 'react'
 import styles from './index.less'
 
-import { request } from '../modules/request/src'
+import { request } from '../modules/request/src/index'
 
 export default () => {
-  // console.log('process:', process)
-  // console.log('env:', process.env)
+  console.log('process:', process)
+  console.log('env:', process.env)
   const init = useCallback(async () => {
     try {
       const res = await request({

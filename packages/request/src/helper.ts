@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
+export const defaultGW = 'https://gateway.songxiaocai.com'
+
 export const defaultLogin = 'https://login.songxiaocai.com'
 
 export const defaultHeaders = {
@@ -11,14 +13,13 @@ export const defaultHeaders = {
 export const defaultQuery = {
   appKey: '86683443',
   bizCode: 'devops_login',
-  clientSysName: 'mac osx',
-  clientSysVersion: 'v1.2.3',
+  clientSysName: 'MAC OSX',
+  clientSysVersion: 'v99.99.99',
   clientVersion: 'windows',
-  deviceUUID: Math.random() * 10e10
+  deviceUUID: Math.ceil(Math.random() * 10e10)
 }
 
 export const getDefaultQuery = () => {
-  // uuidv4()
   const query = { ...defaultQuery }
   try {
     const { APP_KEY, BIZ_CODE } = process.env
@@ -27,5 +28,19 @@ export const getDefaultQuery = () => {
       bizCode: BIZ_CODE
     })
   } catch (err) {}
+  try {
+    if (uuidv4()) {
+      Object.assign(query, {
+        deviceUUID: uuidv4()
+      })
+    }
+  } catch (err) {}
   return query
+}
+
+export function delEmptyString(obj: any) {
+  for (const key in obj) {
+    if (obj[key] === '') delete obj[key]
+  }
+  return obj
 }

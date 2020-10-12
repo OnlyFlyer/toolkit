@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 
-import { defaultHeaders, defaultQuery, defaultLogin } from './helper'
+import { defaultHeaders, defaultLogin, getDefaultQuery, delEmptyString } from './helper'
 
 export interface RequestProps {
   api: string
@@ -50,6 +50,7 @@ export const request: any = (props: AxiosRequestConfig & RequestProps) => {
     const { GATEWAT } = process.env
     baseURL = `${GATEWAT}${path}`
   } catch (err) {}
+  const defaultQuery = getDefaultQuery()
   return customAxios({
     ...props,
     url,
@@ -78,11 +79,4 @@ export const request: any = (props: AxiosRequestConfig & RequestProps) => {
     ],
     ...config
   })
-}
-
-function delEmptyString(obj: any) {
-  for (const key in obj) {
-    if (obj[key] === '') delete obj[key]
-  }
-  return obj
 }
