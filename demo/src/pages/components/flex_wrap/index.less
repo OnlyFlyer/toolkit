@@ -1,0 +1,31 @@
+.flex_wrapp {
+  margin-right: -10px;
+  .wrapper {
+    width: calc((100% - 40px) / 4);
+    margin-right: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    background: rgb(121, 242, 157);
+    position: relative;
+    overflow: auto;
+    // margin-left: 10px;
+    // width: 25%;
+    // height: 0;
+    // padding-bottom: 25%;
+    &::after {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+  }
+  .content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // vertical-align: middle;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}

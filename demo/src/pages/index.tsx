@@ -2,6 +2,9 @@ import React, { useCallback, useEffect } from 'react'
 import styles from './index.less'
 
 import { request } from '../modules/request/src/index'
+import FlexWrap from './components/flex_wrap'
+import NoWH from './components/no_width_height'
+import Flex from './components/flex'
 
 export default () => {
   console.log('process:', process)
@@ -28,7 +31,14 @@ export default () => {
   }, [init])
   return (
     <div>
-      <h1 className={styles.title}>Page index哈哈</h1>
+      <h1 className={styles.title}>Page index</h1>
+      <hr />
+      <FlexWrap />
+      <hr />
+      <NoWH />
+      <hr />
+      <Flex />
+      <hr />
     </div>
   );
 }
