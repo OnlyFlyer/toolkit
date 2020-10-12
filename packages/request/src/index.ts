@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 
-import { defaultHeaders, defaultLogin, getDefaultQuery, delEmptyString } from './helper'
+import { defaultHeaders, defaultLogin, getDefaultQuery, delEmptyString, defaultGW } from './helper'
 
 export interface RequestProps {
   api: string
@@ -47,7 +47,7 @@ export const request: any = (props: AxiosRequestConfig & RequestProps) => {
   } = props
   let baseURL = path
   try {
-    const { GATEWAT } = process.env
+    const { GATEWAT = defaultGW } = process.env
     baseURL = `${GATEWAT}${path}`
   } catch (err) {}
   const defaultQuery = getDefaultQuery()

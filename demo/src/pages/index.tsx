@@ -33,11 +33,11 @@ export default () => {
     <div>
       <h1 className={styles.title}>Page index</h1>
       <hr />
+      <Flex />
+      <hr />
       <FlexWrap />
       <hr />
       <NoWH />
-      <hr />
-      <Flex />
       <hr />
     </div>
   );
