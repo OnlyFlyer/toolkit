@@ -6,9 +6,16 @@ import FlexWrap from './components/flex_wrap'
 import NoWH from './components/no_width_height'
 import Flex from './components/flex'
 
+import all from './promises/all'
+import allSettled from './promises/all_settled'
+import any from './promises/any'
+import race from './promises/race'
+import reject from './promises/reject'
+import resolve from './promises/resolve'
+
 export default () => {
-  console.log('process:', process)
-  console.log('env:', process.env)
+  // console.log('process:', process)
+  // console.log('env:', process.env)
   const init = useCallback(async () => {
     try {
       const res = await request({
@@ -27,7 +34,13 @@ export default () => {
     }
   }, [])
   useEffect(() => {
-    init()
+    // init()
+    // race()
+    all()
+    // allSettled()
+    // any()
+    // resolve()
+    // reject()
   }, [init])
   return (
     <div>
