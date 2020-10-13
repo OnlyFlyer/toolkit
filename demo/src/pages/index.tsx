@@ -34,9 +34,9 @@ export default () => {
     }
   }, [])
   useEffect(() => {
-    // init()
+    init()
     // race()
-    all()
+    // all()
     // allSettled()
     // any()
     // resolve()
