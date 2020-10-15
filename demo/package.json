@@ -1,10 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "dev": "rm -rf ./src/modules/* && cp -r ../packages/* ./src/modules && UMI_ENV=dev umi dev",
-    "dev:test": "rm -rf ./src/modules/* && cp -r ../packages/* ./src/modules && UMI_ENV=test umi dev",
-    "dev:prod": "rm -rf ./src/modules/* && cp -r ../packages/* ./src/modules && umi dev",
-    "clean": "rm -rf ./src/modules/*",
+    "dev": "UMI_ENV=dev umi dev",
+    "dev:clean": "yarn clean && UMI_ENV=dev umi dev",
+    "dev:test": "yarn clean && UMI_ENV=test umi dev",
+    "dev:prod": "yarn clean && umi dev",
+    "clean": "rm -rf ./src/modules/* && cp -r ../packages/* ./src/modules",
     "build": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",

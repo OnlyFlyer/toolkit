@@ -1,13 +1,12 @@
 import { v4 as uuidv4 } from 'uuid'
 
-export const defaultGW = 'https://gateway.songxiaocai.com'
+export const defaultGW: string = 'https://gateway.songxiaocai.com'
 
-export const defaultLogin = 'https://login.songxiaocai.com'
+export const defaultLogin: string = 'https://login.songxiaocai.com'
 
 export const defaultHeaders = {
   // 'Content-type': 'application/x-www-form-urlencoded',
   'Content-Type': 'multipart/form-data'
-  // appKey: process.env.APP_KEY
 }
 
 export const defaultQuery = {

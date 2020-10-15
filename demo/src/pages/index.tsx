@@ -14,26 +14,55 @@ import reject from './promises/reject'
 import resolve from './promises/resolve'
 
 export default () => {
-  console.log('process:', process.env)
   const init = useCallback(async () => {
     try {
-      const res = await request({
-        api: 'songxiaocai.devops.AppProvider.queryClient',
-        url: 'gw/api/',
-        method: 'post',
-        query: {
-          queryDTO: {
-            types: [1,2,3,4]
+      const res = await Promise.allSettled([
+        request({
+          api: 'songxiaocai.devops.AppProvider.queryClient',
+          query: {
+            queryDTO: {
+              types: [1,2,3,4]
+            }
           }
-        }
-      })
+        }),
+        request({ api: 'aa', query: { bb: {}, dd: 'dd' } }),
+        request({ api: 'songxiaocai.user.getById' }),
+        request({ api: 'image', path: '/upload/' }),
+        request({ api: 'songxiaocai.user.acp.getOssToken' })
+      ])
       console.log('res:', res)
     } catch (err) {
       console.log('err:', err)
     }
   }, [])
+  async function _upload (fileList: any) {
+    try {
+      // const ossConfig = await request({ api: 'songxiaocai.user.acp.getOssToken' })
+      const aaaa = await Promise.all(fileList.map((file: any) => {
+        console.log('file:', file)
+        console.log('file type:', file instanceof File)
+        return request({ api: 'image', path: '/upload/', query: { image: file, token: generateToken() } })
+      }))
+      console.log('aaaa:', aaaa)
+    } catch (err) {
+      console.log('aaaaa err:', err)
+    }
+  }
+  function dropFn(e: any) {
+    e.preventDefault()
+    // const ossConfig = await request({ api: 'songxiaocai.user.acp.getOssToken' })
+    const files = Array.from(e.dataTransfer.files)
+    // const items = Array.from(e.dataTransfer.items)
+    console.log('drop:', e)
+    // console.log('ossConfig:', ossConfig)
+    console.log('files:', files)
+    _upload(files)
+    // console.log('items:', items)
+  }
   useEffect(() => {
     init()
+    document.querySelector('#upload')?.addEventListener('drop', dropFn, false)
+    return document.querySelector('#upload')?.removeEventListener('paste', dropFn, false)
     // race()
     // all()
     // allSettled()
@@ -43,32 +72,41 @@ export default () => {
   }, [init])
   return (
     <div>
+      <input id='text' />
+      <textarea id='upload' draggable />
       <h1 className={styles.title}>Page index</h1>
-      <hr />
+      {/* <hr />
       <Flex />
       <hr />
       <FlexWrap />
       <hr />
       <NoWH />
-      <hr />
+      <hr /> */}
     </div>
   );
 }
 
-// const sleep = (t: number, data?: any) => new Promise((resolve) => {
-//   setTimeout(() => {
-//     resolve(data || {})
-//   }, t)
-// })
+export function encode(timestamp: any, appKey: any) {
+  let last = ''
+  for (let i = 0; i < timestamp.length; i++) {
+    let index = timestamp.charAt(i)
+    if (i - 1 < appKey.length && i > 0) {
+      const r = parseInt(appKey[i - 1]) % 2
+      if (r > 0) {
+        index = timestamp.charAt(i) ^ 0x1
+      }
+    }
+    last += index
+  }
+  return last
+}
 
-// export interface RequestProps {
-//   api: string
-//   query?: any
-//   headers?: any
-//   config?: any
-// }
-
-// const request = async (props: RequestProps) => {
-//   await sleep(3000, { aa: 'bb' })
-//   return props
-// }
+export const generateToken = (appKey?: any) => {
+  const _appKey = 86683443
+  const timestamp = Date.now() + ''
+  const reverseAppKey = (_appKey + '')
+    .split('')
+    .reverse()
+    .join('')
+  return encode(timestamp, reverseAppKey)
+}
