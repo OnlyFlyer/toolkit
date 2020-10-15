@@ -14,11 +14,7 @@ import reject from './promises/reject'
 import resolve from './promises/resolve'
 
 export default () => {
-  // console.log('process:', process)
-  console.log('GATEWAY:', process.env.GATEWAY)
-  console.log('APP_KEY:', process.env.APP_KEY)
-  console.log('BIZ_CODE:', process.env.BIZ_CODE)
-  console.log('env:', process.env)
+  console.log('process:', process.env)
   const init = useCallback(async () => {
     try {
       const res = await request({

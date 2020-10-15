@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 
-import { defaultHeaders, defaultLogin, getDefaultQuery, delEmptyString, defaultGW } from './helper'
+import { defaultHeaders, defaultLogin, getDefaultQuery, delEmptyString, defaultGW, defaultQuery } from './helper'
 
 export interface RequestProps {
   api: string
@@ -27,8 +27,10 @@ customAxios.interceptors.response.use(
     if (success) return response || result
     if (+errorResponse.code === 9100) {
       try {
-        const { APP_KEY = '', LOGIN = defaultLogin } = process.env
-        window.location.href = `${LOGIN}?appKey=${APP_KEY}&goto_page=${encodeURIComponent(href)}`
+        const { appKey } = defaultQuery
+        const _appKey = process.env.APP_KEY || appKey
+        const _login = process.env.LOGIN || defaultLogin
+        window.location.href = `${_login}?appKey=${_appKey}&goto_page=${encodeURIComponent(href)}`
       } catch (err) {
       }
       return Promise.reject(errorResponse)
@@ -47,8 +49,8 @@ export const request: any = (props: AxiosRequestConfig & RequestProps) => {
   } = props
   let baseURL = path
   try {
-    const { GATEWAT = defaultGW } = process.env
-    baseURL = `${GATEWAT}${path}`
+    const _url = process.env.GATEWAY || defaultGW
+    baseURL = `${_url}${path}`
   } catch (err) {}
   const defaultQuery = getDefaultQuery()
   return customAxios({

@@ -15,18 +15,24 @@ export const defaultQuery = {
   bizCode: 'devops_login',
   clientSysName: 'MAC OSX',
   clientSysVersion: 'v99.99.99',
-  clientVersion: 'windows',
+  clientVersion: 'MAC OSX',
   deviceUUID: Math.ceil(Math.random() * 10e10)
 }
 
 export const getDefaultQuery = () => {
   const query = { ...defaultQuery }
   try {
-    const { APP_KEY, BIZ_CODE } = process.env
-    Object.assign(query, {
-      appKey: APP_KEY,
-      bizCode: BIZ_CODE
-    })
+    // 若没有透传就不能用 `const { APP_KEY, BIZ_CODE } = process.env` 解构出来，所以粗暴点直接用
+    if (process.env.APP_KEY) {
+      Object.assign(query, {
+        appKey: process.env.APP_KEY
+      })
+    }
+    if (process.env.BIZ_CODE) {
+      Object.assign(query, {
+        bizCode: process.env.BIZ_CODE
+      })
+    }
   } catch (err) {}
   try {
     if (uuidv4()) {
