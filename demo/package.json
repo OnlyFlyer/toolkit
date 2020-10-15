@@ -1,9 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "rm -rf ./src/modules/* && cp -r ../packages/request ./src/modules && UMI_ENV=dev umi dev",
-    "dev:test": "rm -rf ./src/modules/* && cp -r ../packages/request ./src/modules && UMI_ENV=test umi dev",
-    "dev:prod": "rm -rf ./src/modules/* && cp -r ../packages/request ./src/modules && umi dev",
+    "dev": "rm -rf ./src/modules/* && cp -r ../packages/* ./src/modules && UMI_ENV=dev umi dev",
+    "dev:test": "rm -rf ./src/modules/* && cp -r ../packages/* ./src/modules && UMI_ENV=test umi dev",
+    "dev:prod": "rm -rf ./src/modules/* && cp -r ../packages/* ./src/modules && umi dev",
     "clean": "rm -rf ./src/modules/*",
     "build": "umi build",
     "postinstall": "umi generate tmp",
