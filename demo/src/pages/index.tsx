@@ -61,27 +61,27 @@ export default () => {
   }
   useEffect(() => {
     init()
-    document.querySelector('#upload')?.addEventListener('drop', dropFn, false)
-    return document.querySelector('#upload')?.removeEventListener('paste', dropFn, false)
+    // any()
     // race()
     // all()
     // allSettled()
-    // any()
     // resolve()
     // reject()
+    document.querySelector('#upload')?.addEventListener('drop', dropFn, false)
+    return document.querySelector('#upload')?.removeEventListener('paste', dropFn, false)
   }, [init])
   return (
     <div>
       <input id='text' />
       <textarea id='upload' draggable />
       <h1 className={styles.title}>Page index</h1>
-      {/* <hr />
+      <hr />
       <Flex />
       <hr />
       <FlexWrap />
       <hr />
       <NoWH />
-      <hr /> */}
+      <hr />
     </div>
   );
 }
