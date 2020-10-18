@@ -43,7 +43,7 @@ export const request: any = (props: AxiosRequestConfig & RequestProps) => {
           if (_data[key] === '') break
           data.append(
             key,
-            _data[key] instanceof Object ? JSON.stringify(delEmptyString(_data[key])) : _data[key]
+            (_data[key] instanceof Object && _data[key].constructor.name === 'Object') ? JSON.stringify(delEmptyString(_data[key])) : _data[key]
           )
         }
         return data
