@@ -5,6 +5,7 @@ import { request } from '../modules/request/src/index'
 import FlexWrap from './components/flex_wrap'
 import NoWH from './components/no_width_height'
 import Flex from './components/flex'
+import HalfH from './components/half_h'
 
 import all from './promises/all'
 import allSettled from './promises/all_settled'
@@ -75,6 +76,7 @@ export default () => {
       <input id='text' />
       <textarea id='upload' draggable />
       <h1 className={styles.title}>Page index</h1>
+      <HalfH />
       <hr />
       <Flex />
       <hr />
