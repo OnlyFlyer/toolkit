@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import { defaultHeaders, defaultLogin, getDefaultQuery, defaultGW, delEmptyString } from '../helper'
+import { defaultHeaders, defaultLogin, getDefaultQuery, defaultGW, delEmptyString, specialFileType } from '../helper'
 
 export interface RequestProps {
   api: string
@@ -41,10 +41,13 @@ export const request: any = (props: AxiosRequestConfig & RequestProps) => {
         const data = new window.FormData()
         for (const key in _data) {
           if (_data[key] === '') break
-          data.append(
-            key,
-            (_data[key] instanceof Object && _data[key].constructor.name === 'Object') ? JSON.stringify(delEmptyString(_data[key])) : _data[key]
-          )
+          let value = _data[key]
+          if (_data[key] instanceof Object) {
+            if (!specialFileType.includes(_data[key].constructor.name)) {
+              value = JSON.stringify(delEmptyString(_data[key]))
+            }
+          }
+          data.append(key, value)
         }
         return data
       }

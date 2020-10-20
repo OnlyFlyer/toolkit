@@ -4,6 +4,8 @@ export const defaultGW: string = 'https://gateway.songxiaocai.com'
 
 export const defaultLogin: string = 'https://login.songxiaocai.com'
 
+export const specialFileType = ['Blob', 'File']
+
 export const defaultHeaders = {
   // 'Content-type': 'application/x-www-form-urlencoded',
   'Content-Type': 'multipart/form-data'

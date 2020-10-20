@@ -25,7 +25,7 @@ export default () => {
             }
           }
         }),
-        request({ api: 'aa', query: { bb: {}, dd: 'dd', cc: [1,2,3] } }),
+        request({ api: '/api/demo', query: { a: {a1: 11, a2: 22}, b: [1,2,3], c: 123, d: new File(['foo'], 'foo.png'), e: new Blob() } }),
         request({ api: 'songxiaocai.user.getById' }),
         request({ api: 'image', path: '/upload/' }),
         request({ api: 'songxiaocai.user.acp.getOssToken' })
