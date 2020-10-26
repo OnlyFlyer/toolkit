@@ -1,1 +1,1 @@
-export { request } from './web'
+export { request, RequestProps } from './web'

@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 import { defaultHeaders, defaultLogin, getDefaultQuery, defaultGW, delEmptyString, specialFileType } from '../helper'
 
-export interface RequestProps {
+export interface RequestProps extends AxiosRequestConfig {
   api: string
   path?: string
   query?: any
@@ -10,7 +10,7 @@ export interface RequestProps {
   config?: AxiosRequestConfig
 }
 
-export const request: any = (props: AxiosRequestConfig & RequestProps) => {
+export const request: any = (props: RequestProps) => {
   const {
     api, path = '/gw/api', method = 'post',
     headers = {}, query = {}, config = {}
