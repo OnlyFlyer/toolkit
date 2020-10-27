@@ -1,12 +1,15 @@
-import { Component, useState, useCallback, useEffect } from 'react'
+import { Component, useState, useCallback, useEffect, useRef } from 'react'
 
-// import { request } from '../libs/request'
+import { request, RequestProps } from '../../request/src/index'
 
-var request: any = () => {}
+// var request: any = () => {}
 
 const TOEKN_URL = 'sxc.acp.repeatToken.get'
 
-export default class BaseComponent extends Component {
+// export interface AvoidRepeatCompProps {}
+
+
+export class AvoidRepeatBaseComponent extends Component {
   state = {
     avoidRepeatToken: undefined,
     pool: {}
@@ -33,7 +36,7 @@ export default class BaseComponent extends Component {
     this.initToken()
   }
 
-  post = ({ api, headers = {}, ...rest }= {}) => new Promise((resolve, reject) => {
+  post = ({ api, headers = {}, ...rest }: any) => new Promise((resolve, reject) => {
     const { avoidRepeatToken, pool } = this.state
     if (!api) return
     if (!pool[api]) {
@@ -45,7 +48,7 @@ export default class BaseComponent extends Component {
     if (avoidRepeatToken) {
       Object.assign(p, {
         headers: {
-          ...(params.headers || {}),
+          ...(headers || {}),
           'rp-check-tk': avoidRepeatToken
         }
       })
@@ -69,55 +72,67 @@ export default class BaseComponent extends Component {
   })
 }
 
-export const useAvoidRepeatHook = (justOnce = false) => {
-  const [token, setToken] = useState(undefined)
-  const [pool, setPool] = useState({})
+export interface AvoidRepeatHookProps {
+  justOnce?: boolean
+}
+
+export const useAvoidRepeatHook = (p: AvoidRepeatHookProps) => {
+  const tokenRef = useRef<string | undefined>(undefined)
+  const requestNumsRef = useRef<number>(0)
+  const [pool, setPool] = useState<any>({})
+
+  const { justOnce = false } = p
 
   const initToken = useCallback(async () => {
-    const res = await request({ api: TOEKN_URL })
-    setToken(res.token)
+    try {
+      const res = await request({ api: TOEKN_URL })
+      tokenRef.current = res.token
+    } catch (err) {}
   }, [])
+
   const destroyToken = useCallback(() => {
-    setToken(undefined)
+    tokenRef.current = undefined
   }, [])
+
   const retryToken = useCallback(() => {
     initToken()
   }, [initToken])
-  const post = async (params) =>
-    new Promise((resolve, reject) => {
-      if (!params.api) return
-      if (!pool[params.api]) {
-        setPool({ ...pool, [params.api]: { loading: true } })
-      } else {
-        if (pool[params.api].loading) return
-      }
-      const p = { ...params }
-      if (token) {
-        Object.assign(p, {
-          headers: {
-            ...(params.headers || {}),
-            'rp-check-tk': token
-          }
-        })
-      }
-      request(p)
-        .then((e) => {
-          resolve(e)
-        })
-        .catch((err) => {
-          reject(err)
-        })
-        .finally(() => {
-          setPool({ ...pool, [params.api]: { loading: false } })
-          setToken(undefined)
-          initToken()
-        })
-    })
+
+  const post = async (params: RequestProps) =>
+  new Promise((resolve, reject) => {
+    if (!params.api) return
+    // 如果只允许发起一次请求且已经请求过一次了，直接返回
+    if (!!justOnce && requestNumsRef.current >= 1) return
+    if (!pool[params.api]) {
+      setPool({ ...pool, [params.api]: { loading: true } })
+    } else {
+      if (pool[params.api].loading) return
+    }
+    const p = { ...params }
+    if (tokenRef.current) {
+      Object.assign(p, {
+        headers: {
+          ...(params.headers || {}),
+          'rp-check-tk': tokenRef.current
+        }
+      })
+    }
+    request(p)
+      .then((data: any) => resolve(data))
+      .catch((err: any) => reject(err))
+      .finally(() => {
+        requestNumsRef.current = requestNumsRef.current + 1
+        setPool({ ...pool, [params.api]: { loading: false } })
+        tokenRef.current = undefined
+        if (!!justOnce) return
+        initToken()
+      })
+  })
   useEffect(() => {
     initToken()
   }, [initToken])
   return {
-    token,
+    token: tokenRef.current,
     post,
     destroyToken,
     retryToken,

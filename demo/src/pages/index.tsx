@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import styles from './index.less'
 
 import { request } from '../modules/request/src/index'
+import { AvoidRepeatBaseComponent, useAvoidRepeatHook } from '../modules/base_component/src/index'
 import FlexWrap from './components/flex_wrap'
 import NoWH from './components/no_width_height'
 import Flex from './components/flex'
@@ -13,6 +14,8 @@ import any from './promises/any'
 import race from './promises/race'
 import reject from './promises/reject'
 import resolve from './promises/resolve'
+
+import { AvoidRepeat } from './components/base_component/index'
 
 export default () => {
   const init = useCallback(async () => {
@@ -71,11 +74,26 @@ export default () => {
     document.querySelector('#upload')?.addEventListener('drop', dropFn, false)
     return document.querySelector('#upload')?.removeEventListener('paste', dropFn, false)
   }, [init])
+  const { post } = useAvoidRepeatHook({ justOnce: false })
+
+  const handleRepeat = useCallback(async () => {
+    try {
+      console.log('哈哈:')
+      await post({ api: 'sxc.supplychain.workbench.material.createMaterialOperate', query: {
+        createDTO: {"type":1,"operateTime":1603266431514,"detailDTOList":[{"materialId":2,"amount":"12","price":"23"},{"materialId":4,"amount":"23","price":"123"}]}
+      } })
+    } catch (err) {
+      console.log('防重复错误拉:', err)
+    }
+  }, [])
   return (
     <div>
       <input id='text' />
       <textarea id='upload' draggable />
-      <h1 className={styles.title}>Page index</h1>
+      <AvoidRepeat />
+      <h1 className={styles.title} onClick={handleRepeat}>按钮1</h1>
+      <BtnTwo />
+      <BtnThree />
       <HalfH />
       <hr />
       <Flex />
@@ -111,4 +129,34 @@ export const generateToken = (appKey?: any) => {
     .reverse()
     .join('')
   return encode(timestamp, reverseAppKey)
+}
+
+export const BtnTwo = () => {
+  const { post } = useAvoidRepeatHook({ justOnce: true })
+  const handleRepeat = useCallback(async () => {
+    try {
+      console.log('按钮2:')
+      await post({ api: 'sxc.supplychain.workbench.material.createMaterialOperate', query: {
+        createDTO: {"type":1,"operateTime":1603266431514,"detailDTOList":[{"materialId":2,"amount":"12","price":"23"},{"materialId":4,"amount":"23","price":"123"}]}
+      } })
+    } catch (err) {
+      console.log('防重复按钮2错误了:', err)
+    }
+  }, [])
+  return <h1 className={styles.title} onClick={handleRepeat}>按钮2</h1>
+}
+
+export const BtnThree = () => {
+  const { post } = useAvoidRepeatHook({ justOnce: true })
+  const handleRepeat = useCallback(async () => {
+    try {
+      console.log('按钮3:')
+      await post({ api: 'sxc.supplychain.workbench.material.createMaterialOperate', query: {
+        createDTO: {"type":1,"operateTime":1603266431514,"detailDTOList":[{"materialId":2,"amount":"12","price":"23"},{"materialId":4,"amount":"23","price":"123"}]}
+      } })
+    } catch (err) {
+      console.log('防重复按钮3错误了:', err)
+    }
+  }, [])
+  return <h1 className={styles.title} onClick={handleRepeat}>按钮3</h1>
 }
