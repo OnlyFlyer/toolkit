@@ -9,6 +9,11 @@ axios@^0.20.0:
   dependencies:
     follow-redirects "^1.10.0"
 
+fingerprintjs2sync@^1.5.9:
+  version "1.5.9"
+  resolved "https://registry.npm.taobao.org/fingerprintjs2sync/download/fingerprintjs2sync-1.5.9.tgz#8d417c2bbc28e2d3d356687220b66990e271d658"
+  integrity sha1-jUF8K7wo4tPTVmhyILZpkOJx1lg=
+
 follow-redirects@^1.10.0:
   version "1.13.0"
   resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.13.0.tgz?cache=0&sync_timestamp=1597059692702&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
@@ -25,6 +30,11 @@ rollup@^2.29.0:
   integrity sha1-DFxZaFMLIcoOMvi5S3zZNGz7Duw=
   optionalDependencies:
     fsevents "~2.1.2"
+
+ua-parser-js@^0.7.22:
+  version "0.7.22"
+  resolved "https://registry.npm.taobao.org/ua-parser-js/download/ua-parser-js-0.7.22.tgz?cache=0&sync_timestamp=1599900411653&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fua-parser-js%2Fdownload%2Fua-parser-js-0.7.22.tgz#960df60a5f911ea8f1c818f3747b99c6e177eae3"
+  integrity sha1-lg32Cl+RHqjxyBjzdHuZxuF36uM=
 
 uuid@^8.3.0:
   version "8.3.1"

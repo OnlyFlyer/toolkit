@@ -20,6 +20,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.20.0",
+    "fingerprintjs2sync": "^1.5.9",
+    "ua-parser-js": "^0.7.22",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
