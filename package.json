@@ -1,6 +1,9 @@
 {
   "name": "basic",
   "private": true,
+  "scripts": {
+    "build": "cd ./config/ && node build.ts"
+  },
   "devDependencies": {
     "lerna": "^3.22.1"
   }
