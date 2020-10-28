@@ -132,7 +132,7 @@ export const generateToken = (appKey?: any) => {
 }
 
 export const BtnTwo = () => {
-  const { post } = useAvoidRepeatHook({ justOnce: true })
+  const { post } = useAvoidRepeatHook({ justOnce: false })
   const handleRepeat = useCallback(async () => {
     try {
       console.log('按钮2:')
