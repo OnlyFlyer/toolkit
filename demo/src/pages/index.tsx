@@ -19,25 +19,83 @@ import { AvoidRepeat } from './components/base_component/index'
 
 export default () => {
   const init = useCallback(async () => {
-    try {
-      const res = await Promise.allSettled([
-        request({
-          api: 'songxiaocai.devops.AppProvider.queryClient',
-          query: {
-            queryDTO: {
-              types: [1,2,3,4]
-            }
+    request({
+      api: 'songxiaocai.user.acp.getOssToken',
+      query: {
+        aa: 'aa',
+        file: new File(['foo'], 'foo.png'),
+        blob: new Blob(),
+        bb: {
+          bb: 'bb'
+        }
+      }
+    })
+
+    request({
+      api: 'songxiaocai.user.acp.getOssToken',
+      query: {
+        file: new File(['foo'], 'foo.png'),
+        blob: new Blob(),
+        queryDTO: {
+          aa: 'aa',
+          bb: {
+            bb: 'bb'
           }
-        }),
-        request({ api: '/api/demo', query: { a: {a1: 11, a2: 22}, b: [1,2,3], c: 123, d: new File(['foo'], 'foo.png'), e: new Blob() } }),
-        request({ api: 'songxiaocai.user.getById' }),
-        request({ api: 'image', path: '/upload/' }),
-        request({ api: 'songxiaocai.user.acp.getOssToken' })
-      ])
-      console.log('res:', res)
-    } catch (err) {
-      console.log('err:', err)
-    }
+        }
+      }
+    })
+
+    request({
+      api: 'songxiaocai.user.acp.getOssToken',
+      path: '/',
+      query: {
+        queryDTO: {
+          aa: 'aa',
+          bb: {
+            bb: 'bb'
+          }
+        }
+      }
+    })
+
+    request({
+      config: {
+        url: 'https://www.baidu.com/getOssToken'
+      },
+      query: {
+        queryDTO: {
+          aa: 'aa',
+          bb: {
+            bb: 'bb'
+          }
+        }
+      }
+    })
+    request({
+      config: {
+        url: 'https://www.baidu.com/getOssToken',
+        data: {aa: '呵呵'}
+      }
+    })
+    // try {
+    //   const res = await Promise.allSettled([
+    //     request({
+    //       api: 'songxiaocai.devops.AppProvider.queryClient',
+    //       query: {
+    //         queryDTO: {
+    //           types: [1,2,3,4]
+    //         }
+    //       }
+    //     }),
+    //     request({ api: '/api/demo', query: { a: {a1: 11, a2: 22}, b: [1,2,3], c: 123, d: new File(['foo'], 'foo.png'), e: new Blob() } }),
+    //     request({ api: 'songxiaocai.user.getById' }),
+    //     request({ api: 'image', path: '/upload/' }),
+    //     request({ api: 'songxiaocai.user.acp.getOssToken' })
+    //   ])
+    //   console.log('res:', res)
+    // } catch (err) {
+    //   console.log('err:', err)
+    // }
   }, [])
   async function _upload (fileList: any) {
     try {
@@ -74,26 +132,26 @@ export default () => {
     document.querySelector('#upload')?.addEventListener('drop', dropFn, false)
     return document.querySelector('#upload')?.removeEventListener('paste', dropFn, false)
   }, [init])
-  const { post } = useAvoidRepeatHook({ justOnce: false })
+  // const { post } = useAvoidRepeatHook({ justOnce: false })
 
-  const handleRepeat = useCallback(async () => {
-    try {
-      console.log('哈哈:')
-      await post({ api: 'sxc.supplychain.workbench.material.createMaterialOperate', query: {
-        createDTO: {"type":1,"operateTime":1603266431514,"detailDTOList":[{"materialId":2,"amount":"12","price":"23"},{"materialId":4,"amount":"23","price":"123"}]}
-      } })
-    } catch (err) {
-      console.log('防重复错误拉:', err)
-    }
-  }, [])
+  // const handleRepeat = useCallback(async () => {
+  //   try {
+  //     console.log('哈哈:')
+  //     await post({ api: 'sxc.supplychain.workbench.material.createMaterialOperate', query: {
+  //       createDTO: {"type":1,"operateTime":1603266431514,"detailDTOList":[{"materialId":2,"amount":"12","price":"23"},{"materialId":4,"amount":"23","price":"123"}]}
+  //     } })
+  //   } catch (err) {
+  //     console.log('防重复错误拉:', err)
+  //   }
+  // }, [])
   return (
     <div>
       <input id='text' />
       <textarea id='upload' draggable />
-      <AvoidRepeat />
+      {/* <AvoidRepeat />
       <h1 className={styles.title} onClick={handleRepeat}>按钮1</h1>
       <BtnTwo />
-      <BtnThree />
+      <BtnThree /> */}
       <HalfH />
       <hr />
       <Flex />
