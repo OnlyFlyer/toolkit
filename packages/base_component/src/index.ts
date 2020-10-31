@@ -2,7 +2,7 @@ import { Component, useState, useCallback, useEffect, useRef } from 'react'
 
 import { request, RequestProps } from '../../request/src/index'
 
-const TOEKN_URL = 'sxc.acp.repeatToken.get'
+const TOEKN_URL = 'get token api'
 
 export interface AvoidRepeatCompState {
   avoidRepeatToken: string | undefined
