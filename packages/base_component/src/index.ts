@@ -10,7 +10,6 @@ export interface AvoidRepeatCompState {
   fetchTokenNums: number
 }
 
-
 export class AvoidRepeatBaseComponent extends Component {
   state: AvoidRepeatCompState = {
     avoidRepeatToken: undefined,
