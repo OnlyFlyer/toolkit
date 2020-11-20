@@ -19,6 +19,10 @@ import { AvoidRepeat } from './components/base_component/index'
 
 export default () => {
   const init = useCallback(async () => {
+    request({
+      api: '',
+      query: {}
+    })
     // request({
     //   api: 'songxiaocai.user.acp.getOssToken',
     //   query: {

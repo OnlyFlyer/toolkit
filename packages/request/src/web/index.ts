@@ -10,7 +10,7 @@ export interface RequestProps extends AxiosRequestConfig {
   config?: AxiosRequestConfig
 }
 
-export const request: any = (props: RequestProps) => {
+export const request: (props: RequestProps) => {} = (props: RequestProps) => {
   const {
     api, path = '/gw/api', method = 'post',
     headers = {}, query = {}, config = {}
