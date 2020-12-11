@@ -12,6 +12,7 @@ export interface UploadProps {
     [key: string]: string;
   };
   data?: {
+    bucketType?: string
     [key: string]: any;
   };
   config?: AxiosRequestConfig;

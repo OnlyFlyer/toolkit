@@ -7,6 +7,8 @@ import FlexWrap from './components/flex_wrap'
 import NoWH from './components/no_width_height'
 import Flex from './components/flex'
 import HalfH from './components/half_h'
+import GWUpload from './components/gw_upload'
+import STSUpload from './components/sts_upload'
 
 import all from './promises/all'
 import allSettled from './promises/all_settled'
@@ -150,6 +152,8 @@ export default () => {
   }, [])
   return (
     <div>
+      <GWUpload />
+      <STSUpload />
       <input id='text' />
       <textarea id='upload' draggable />
       <AvoidRepeat />

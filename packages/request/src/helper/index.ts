@@ -6,6 +6,8 @@ export const defaultGW: string = 'https://gateway.songxiaocai.com'
 
 export const defaultLogin: string = 'https://login.songxiaocai.com'
 
+export const defaultGWPath = '/gw/api';
+
 export const specialFileType = ['Blob', 'File']
 
 export const defaultHeaders = {
