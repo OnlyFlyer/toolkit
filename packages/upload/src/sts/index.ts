@@ -1,4 +1,4 @@
-import { UploadProps } from '@/upload/gateway';
+import { UploadProps } from '../gateway';
 
 // sts 前端上传的方法
 

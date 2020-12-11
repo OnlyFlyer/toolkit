@@ -1,4 +1,4 @@
-import { getDefaultQuery } from '@/request/helper';
+import { getDefaultQuery } from '../../../request/src/helper';
 
 // 根据 时间戳和appKey 返回加密后的字符串
 export const encode = (timestamp: any, appKey: string) => {

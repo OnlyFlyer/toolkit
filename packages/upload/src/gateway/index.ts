@@ -1,9 +1,9 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { AxiosRequestConfig } from 'axios'
 
-import { request, RequestProps } from '@/request/web';
+import { request, RequestProps } from '../../../request/src'
 
-import { defaultGW } from '@/request/helper';
-import { generateToken } from '@/upload/helper';
+import { defaultGW } from '../../../request/src/helper'
+import { generateToken } from '../helper';
 
 export interface UploadProps {
   filename?: string;
@@ -35,7 +35,7 @@ export const WebGWUpload: <T = any>(props: UploadProps) => Promise<T> = ({
     },
     headers,
     ...config,
-  });
+  }) as any;
 };
 
 // 微信小程序网关 上传
