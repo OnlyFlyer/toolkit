@@ -16,7 +16,8 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@@/*": ["src/.umi/*"]
     }
   },
   "include": ["src"],
